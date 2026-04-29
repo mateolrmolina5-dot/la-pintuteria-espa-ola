@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Pinturería Española | Catálogo Completo</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- ESTILOS CSS --- */
+        :root {
+            --rojo: #e31b23;
+            --amarillo: #ffc400;
+            --oscuro: #1a1a1a;
+            --fondo: #fdfcfa;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--fondo); 
+            color: var(--oscuro);
+            line-height: 1.6;
+        }
+
+        /* Manchas de color de fondo decorativas */
+        .deco-blob {
+            position: fixed; border-radius: 50%; filter: blur(70px); opacity: 0.1; z-index: -1;
+        }
+        .blob-1 { width: 300px; height: 300px; background: var(--amarillo); top: -50px; right: -50px; }
+        .blob-2 { width: 250px; height: 250px; background: #3498db; bottom: 20px; left: -50px; }
+
+        header {
+            background: linear-gradient(135deg, #b31419 0%, var(--rojo) 50%, var(--amarillo) 100%);
+            color: white; padding: 3rem 1rem; text-align: center;
+            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .logo-box { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .main-logo { max-width: 200px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); margin-bottom: 15px; }
+        header h1 { font-size: 2.2rem; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+
+        .search-container {
+            margin: 25px auto 0; max-width: 500px; position: relative;
+        }
+        .search-container i { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #888; }
+        #buscador {
+            width: 100%; padding: 15px 20px 15px 50px; border-radius: 30px; border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); font-size: 1rem; outline: none;
+        }
+
+        main { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        h2 { color: #b31419; margin: 30px 0 20px; text-transform: uppercase; font-size: 1.4rem; }
+
+        /* Galería de Ambientes */
+        .galeria {
+            display: flex; overflow-x: auto; gap: 15px; padding-bottom: 15px;
+        }
+        .card-ambiente {
+            flex: 0 0 240px; border-radius: 20px; overflow: hidden; position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-bottom: 5px solid var(--amarillo);
+        }
+        .card-ambiente img { width: 100%; height: 180px; object-fit: cover; }
+        .card-ambiente span {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 10px;
+            background: rgba(0,0,0,0.6); color: white; font-size: 0.9rem; text-align: center;
+        }
+
+        /* Productos */
+        .grid-productos {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;
+        }
+        .producto {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column;
+            transition: transform 0.3s;
+        }
+        .producto:hover { transform: translateY(-5px); }
+        .prod-img { width: 100%; height: 220px; object-fit: cover; }
+        .prod-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .prod-body h3 { font-size: 1.2rem; margin-bottom: 5px; }
+        .prod-body .marca { color: #e31b23; font-weight: 600; font-size: 0.9rem; margin-bottom: 10px; }
+        .prod-body p { font-size: 0.9rem; color: #555; margin-bottom: 20px; flex-grow: 1; }
+
+        .btn-wa {
+            background: #25d366; color: white; text-decoration: none; text-align: center;
+            padding: 12px; border-radius: 12px; font-weight: 600; transition: 0.3s;
+        }
+        .btn-wa:hover { background: #1ebe59; }
+
+        /* WhatsApp Flotante */
+        .wa-float {
+            position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white;
+            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-size: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-decoration: none; z-index: 1000;
+        }
+
+        footer { text-align: center; padding: 40px; color: #888; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="deco-blob blob-1"></div>
+    <div class="deco-blob blob-2"></div>
+
+    <header>
+        <div class="logo-box">
+            <img src="logo.jpg" alt="La Española Pinturerías" class="main-logo">
+        </div>
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="buscador" placeholder="¿Qué pintura estás buscando?" onkeyup="filtrar()">
+        </div>
+    </header>
+
+    <main>
+        <h2><i class="fas fa-home"></i> Inspiración para tu casa</h2>
+        <div class="galeria">
+            <div class="card-ambiente">
+                <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=400" alt="Interior">
+                <span>Interiores Tendencia</span>
+            </div>
+            <div class="card-ambiente">
+                <img src="https://images.unsplash.com/photo-1518655061766-48c257ee499e?q=80&w=400" alt="Exterior">
+                <span>Fachadas Modernas</span>
+            </div>
+            <div class="card-ambiente">
+                <img src="https://images.unsplash.com/photo-1601053163359-07f1a3036417?q=80&w=400" alt="Madera">
+                <span>Protección de Madera</span>
+            </div>
+            <div class="card-ambiente">
+                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=400" alt="Pisos">
+                <span>Pisos de Alto Tránsito</span>
+            </div>
+        </div>
+
+        <h2><i class="fas fa-paint-roller"></i> Catálogo de Productos</h2>
+        <div id="productos" class="grid-productos">
+            </div>
+    </main>
+
+    <a href="https://wa.me/5493804350228" class="wa-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <p>&copy; 2026 La Pinturería Española - La Rioja. Cel: 3804350228</p>
+    </footer>
+
+    <script>
+        /* --- LÓGICA JAVASCRIPT --- */
+        const listaProductos = [
+            {
+                nombre: "Látex Interior Profesional",
+                marca: "Alba",
+                desc: "Excelente poder cubritivo y acabado mate. Ideal para renovar living y piezas.",
+                img: "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?q=80&w=400"
+            },
+            {
+                nombre: "Esmalte 3 en 1 Antióxido",
+                marca: "Tersuave",
+                desc: "Convertidor, antióxido y esmalte. Todo en uno para tus rejas y marcos.",
+                img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=400"
+            },
+            {
+                nombre: "Impermeabilizante de Frentes",
+                marca: "Sherwin Williams",
+                desc: "Protección total contra la lluvia y el sol. Colores que duran años.",
+                img: "https://images.unsplash.com/photo-1595853035070-59a39fe84de3?q=80&w=400"
+            },
+            {
+                nombre: "Membrana Líquida Techados",
+                marca: "Plavicon",
+                desc: "Evitá filtraciones en tu techo. Gran elasticidad y resistencia.",
+                img: "https://images.unsplash.com/photo-1628592102751-ba83b0356251?q=80&w=400"
+            },
+            {
+                nombre: "Barniz con Filtro Solar UV",
+                marca: "Cetol",
+                desc: "Especial para maderas al exterior. Resalta la belleza natural del árbol.",
+                img: "https://images.unsplash.com/photo-1541123439599-e63fbb21bbd1?q=80&w=400"
+            },
+            {
+                nombre: "Pintura para Pisos Deportivos",
+                marca: "Sinteplast",
+                desc: "Resistente al desgaste y antideslizante. Ideal para garajes o patios.",
+                img: "https://images.unsplash.com/photo-1523348837742-825bc215160c?q=80&w=400"
+            }
+        ];
+
+        const contenedor = document.getElementById('productos');
+
+        function mostrar(lista) {
+            contenedor.innerHTML = "";
+            lista.forEach(p => {
+                const msj = encodeURIComponent(\`Hola Pinturería Española! Consulto por la pintura \${p.nombre} (\${p.marca}).\`);
+                contenedor.innerHTML += \`
+                    <div class="producto">
+                        <img src="\${p.img}" class="prod-img" alt="\${p.nombre}">
+                        <div class="prod-body">
+                            <span class="marca">\${p.marca}</span>
+                            <h3>\${p.nombre}</h3>
+                            <p>\${p.desc}</p>
+                            <a href="https://wa.me/5493804350228?text=\${msj}" class="btn-wa" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Consultar Precio
+                            </a>
+                        </div>
+                    </div>
+                \`;
+            });
+        }
+
+        function filtrar() {
+            const query = document.getElementById('buscador').value.toLowerCase();
+            const filtrados = listaProductos.filter(p => 
+                p.nombre.toLowerCase().includes(query) || p.marca.toLowerCase().includes(query)
+            );
+            mostrar(filtrados);
+        }
+
+        // Ejecutar al cargar
+        mostrar(listaProductos);
+    </script>
+</body>
+</html>
